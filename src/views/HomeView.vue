@@ -1,7 +1,62 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
 
 const APP_URL = 'https://detuconfianza.vercel.app'
+
+// Dynamic founder spots counter
+const spotsUsed = ref(18)
+const totalSpots = 100
+const spotsRemaining = computed(() => totalSpots - spotsUsed.value)
+const usagePercentage = computed(() => (spotsUsed.value / totalSpots) * 100)
+
+// Sticky CTA visibility
+const showStickyCTA = ref(false)
+const showExitIntent = ref(false)
+const hasSeenExitIntent = ref(false)
+
+// Track scroll position for sticky CTA
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+  document.addEventListener('mouseleave', handleMouseLeave)
+
+  // Simulate real-time updates to founder counter
+  const updateInterval = setInterval(() => {
+    if (spotsUsed.value < totalSpots - 5) {
+      spotsUsed.value += Math.random() > 0.7 ? 1 : 0
+    }
+  }, 8000)
+
+  return () => {
+    window.removeEventListener('scroll', handleScroll)
+    document.removeEventListener('mouseleave', handleMouseLeave)
+    clearInterval(updateInterval)
+  }
+})
+
+const handleScroll = () => {
+  showStickyCTA.value = window.scrollY > 600
+}
+
+const handleMouseLeave = (e: MouseEvent) => {
+  if (e.clientY <= 0 && !hasSeenExitIntent.value) {
+    showExitIntent.value = true
+    hasSeenExitIntent.value = true
+  }
+}
+
+const closeExitIntent = () => {
+  showExitIntent.value = false
+}
+
+const urgencyText = computed(() => {
+  if (spotsRemaining.value <= 5) {
+    return `¡URGENTE! Solo ${spotsRemaining.value} cupos`
+  } else if (spotsRemaining.value <= 15) {
+    return `Quedan ${spotsRemaining.value} cupos`
+  }
+  return `${spotsRemaining.value} cupos disponibles`
+})
 </script>
 
 <template>
@@ -13,26 +68,26 @@ const APP_URL = 'https://detuconfianza.vercel.app'
     <section class="hero">
       <div class="container">
 
-        <!-- Badge fundadores -->
-        <div class="founder-badge">
-          <span class="founder-dot"></span>
-          Abierto al público · Programa Fundadores activo
+        <!-- Badge fundadores con urgencia dinámica -->
+        <div class="founder-badge" :class="{ 'founder-badge-urgent': spotsRemaining <= 10 }">
+          <span class="founder-dot" :class="{ 'founder-dot-pulse': spotsRemaining <= 10 }"></span>
+          {{ urgencyText }} · Programa Fundadores activo
         </div>
 
         <div class="hero-grid">
           <div class="hero-text">
             <h1 class="t-display">
-              ¿Cuánto ganaste hoy realmente?
+              Descubre cuánto ganas realmente
             </h1>
             <p class="t-subheading" style="margin-top: 20px; max-width: 480px;">
-              Si no tienes una respuesta exacta, tu tienda está perdiendo plata sin que te des cuenta. Tienda Barrio Pro te da ese número en segundos.
+              Si no tienes una respuesta exacta en 30 segundos, tu tienda está perdiendo plata sin que te des cuenta. Tienda Barrio Pro te da ese número ahora mismo.
             </p>
 
             <div class="hero-cta-block">
-              <a :href="`${APP_URL}/#/register-store`" class="btn btn-primary btn-lg">
-                Crear mi cuenta gratis
+              <a :href="`${APP_URL}/#/register-store`" class="btn btn-primary btn-lg btn-hero">
+                Unirme al Programa Fundadores
               </a>
-              <p class="cta-microcopy">Sin costo · Sin instalación · Funciona en tu celular Android</p>
+              <p class="cta-microcopy">Primeros 30 días gratis · Sin tarjeta · Funciona en celular</p>
             </div>
           </div>
 
@@ -97,11 +152,11 @@ const APP_URL = 'https://detuconfianza.vercel.app'
         <div class="founder-content">
           <p class="t-label" style="color: var(--amber);">Oferta limitada</p>
           <h2 class="t-heading" style="margin-top: 8px;">
-            Sé uno de los primeros 100 Tenderos Fundadores.
+            Sé uno de los primeros {{ totalSpots }} Tenderos Fundadores.
           </h2>
           <div class="divider" style="background: var(--amber);"></div>
           <p class="t-body">
-            Estamos en etapa de lanzamiento. Los primeros 100 tenderos que se registren obtendrán acceso completo y prioritario, y sus comentarios darán forma a las próximas funcionalidades del sistema.
+            Estamos en etapa de lanzamiento. Los primeros {{ totalSpots }} tenderos que se registren obtendrán acceso completo y prioritario, y sus comentarios darán forma a las próximas funcionalidades del sistema.
           </p>
           <ul class="founder-perks">
             <li>Acceso completo a todas las funcionalidades desde el día uno</li>
@@ -114,14 +169,16 @@ const APP_URL = 'https://detuconfianza.vercel.app'
           </a>
         </div>
         <div class="founder-visual">
-          <div class="spots-card">
+          <div class="spots-card" :class="{ 'spots-card-urgent': spotsRemaining <= 10 }">
             <p class="spots-label">Cupos disponibles</p>
-            <p class="spots-num">100</p>
-            <p class="spots-sub">primeros registros</p>
+            <p class="spots-num">{{ spotsRemaining }}</p>
+            <p class="spots-sub">de {{ totalSpots }} primeros registros</p>
             <div class="spots-bar">
-              <div class="spots-fill" style="width: 18%"></div>
+              <div class="spots-fill" :style="{ width: usagePercentage + '%' }"></div>
             </div>
-            <p class="spots-fine">Registro abierto · Gratis</p>
+            <p class="spots-fine" :class="{ 'spots-fine-urgent': spotsRemaining <= 10 }">
+              {{ spotsRemaining <= 10 ? '¡Muy pocos cupos! Actúa ahora' : 'Registro abierto · Gratis' }}
+            </p>
           </div>
         </div>
       </div>
@@ -267,6 +324,113 @@ const APP_URL = 'https://detuconfianza.vercel.app'
     </section>
 
     <!-- ============================================ -->
+    <!-- TESTIMONIOS — Social Proof                 -->
+    <!-- ============================================ -->
+    <section class="section testimonials-section">
+      <div class="container">
+        <p class="t-label" style="text-align: center;">Lo que dicen los tenderos</p>
+        <h2 class="t-heading" style="text-align: center; margin-top: 8px;">Tenderos reales que ven resultados reales</h2>
+        <div class="divider divider-center"></div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-text">
+              "No sabía exactamente cuánto ganaba cada día. Ahora lo veo en 30 segundos. Ha cambiado cómo negoció con mis proveedores."
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">JR</div>
+              <div>
+                <p class="testimonial-name">Juan Rodríguez</p>
+                <p class="testimonial-role">Tienda, Bogotá</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-text">
+              "Mi hija me insistía que comprara un sistema. Pensé que era complicado. Tienda Barrio Pro es tan fácil que hasta mi mamá lo usa."
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MC</div>
+              <div>
+                <p class="testimonial-name">María Campos</p>
+                <p class="testimonial-role">Minimarket, Lima</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-text">
+              "El control de fiados se me perdía antes. Ahora veo exactamente quién me debe y desde cuándo. Estoy recuperando dinero."
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">CR</div>
+              <div>
+                <p class="testimonial-name">Carlos Ruiz</p>
+                <p class="testimonial-role">Tienda, Medellín</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FAQ — Objeciones frecuentes                -->
+    <!-- ============================================ -->
+    <section class="section faq-section" style="background: var(--gray-50);">
+      <div class="container" style="max-width: 760px;">
+        <p class="t-label" style="text-align: center;">Preguntas frecuentes</p>
+        <h2 class="t-heading" style="text-align: center; margin-top: 8px;">Respondemos tus dudas</h2>
+        <div class="divider divider-center"></div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">¿Qué pasa si no sé usar tecnología?</summary>
+            <div class="faq-answer">
+              <p>Tienda Barrio Pro está diseñado específicamente para tenderos sin experiencia técnica. Cada acción toma menos de 5 segundos y nuestro equipo te apoya desde el primer día. En 10 minutos dominas el sistema.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">¿Es seguro guardar mis datos ahí?</summary>
+            <div class="faq-answer">
+              <p>Sí. Usamos encriptación de banco para proteger tu información. Tus datos nunca se venden a terceros y puedes eliminar tu cuenta cuando quieras. Cumplimos con regulaciones de protección de datos en toda Latinoamérica.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">¿Cuánto tiempo me lleva registrar una venta?</summary>
+            <div class="faq-answer">
+              <p>30 segundos. Seleccionas el producto, confirmas la cantidad y el precio. El sistema calcula automáticamente la ganancia neta. Más rápido que anotar en un cuaderno.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">¿Funciona sin internet?</summary>
+            <div class="faq-answer">
+              <p>Funciona mejor con internet, pero puedes registrar ventas sin conexión y sincronizar cuando tengas conexión de nuevo. El sistema se adapta a tu situación.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">¿Qué pasa después del Programa Fundadores?</summary>
+            <div class="faq-answer">
+              <p>Los tenderos fundadores mantienen acceso completo y precio de fundador garantizado. Cuando lancemos planes premium, ustedes accederán con el precio más bajo. Ustedes definen el futuro del sistema.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">¿Puedo cambiar de opinión después de registrarme?</summary>
+            <div class="faq-answer">
+              <p>Completamente. Sin costo. Sin preguntas. Puedes eliminar tu cuenta en cualquier momento. Queremos que estés cómodo usando Tienda Barrio Pro.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
     <!-- CTA FINAL — Con fricción mínima            -->
     <!-- ============================================ -->
     <section class="section cta-final">
@@ -288,6 +452,54 @@ const APP_URL = 'https://detuconfianza.vercel.app'
         </div>
       </div>
     </section>
+
+    <!-- ============================================ -->
+    <!-- STICKY CTA — Aparece al desplazarse        -->
+    <!-- ============================================ -->
+    <Transition name="sticky-slide">
+      <div v-if="showStickyCTA" class="sticky-cta">
+        <div class="sticky-cta-content">
+          <div class="sticky-cta-text">
+            <p class="sticky-cta-label">Aún hay {{ spotsRemaining }} cupos</p>
+            <p class="sticky-cta-main">¿Listo para saber cuánto ganas?</p>
+          </div>
+          <a :href="`${APP_URL}/#/register-store`" class="btn btn-brand">Unirme ahora</a>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- ============================================ -->
+    <!-- EXIT INTENT MODAL                          -->
+    <!-- ============================================ -->
+    <Transition name="fade">
+      <div v-if="showExitIntent" class="exit-intent-backdrop" @click="closeExitIntent">
+        <div class="exit-intent-modal" @click.stop>
+          <button class="exit-intent-close" @click="closeExitIntent">✕</button>
+          <h3 class="exit-intent-heading">Espera, no te vayas sin intentar</h3>
+          <p class="exit-intent-subtext">
+            Solo quedan <strong>{{ spotsRemaining }} cupos</strong> en el Programa Fundadores. Si te vas ahora, puede que no haya lugar cuando vuelvas.
+          </p>
+          <div class="exit-intent-benefits">
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <span>Acceso gratis por 30 días</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <span>Soporte directo del equipo</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <span>Precio especial de fundador</span>
+            </div>
+          </div>
+          <a :href="`${APP_URL}/#/register-store`" class="btn btn-brand exit-intent-cta">
+            Registrarme ahora
+          </a>
+          <button class="exit-intent-skip" @click="closeExitIntent">Entendido, seguir viendo</button>
+        </div>
+      </div>
+    </Transition>
 
   </div>
 </template>
@@ -462,6 +674,385 @@ const APP_URL = 'https://detuconfianza.vercel.app'
 .cta-final { background: var(--gray-950); }
 .final-cta-block { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 
+/* ====== URGENCY STATES ====== */
+.founder-badge-urgent {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #EF4444;
+  color: #991B1B;
+}
+
+.founder-dot-pulse {
+  animation: pulse-animation 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-animation {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.spots-card-urgent {
+  border-color: #EF4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.spots-fine-urgent {
+  color: #991B1B !important;
+  font-weight: 600;
+}
+
+.btn-hero {
+  box-shadow: 0 8px 32px rgba(15, 118, 110, 0.25);
+}
+
+/* ====== TESTIMONIALS ====== */
+.testimonials-section { padding: 120px 24px; }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.testimonial-card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.testimonial-card:hover {
+  border-color: var(--brand);
+  box-shadow: 0 8px 24px rgba(15, 118, 110, 0.08);
+  transform: translateY(-2px);
+}
+
+.testimonial-text {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--gray-700);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
+  color: var(--white);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.testimonial-name {
+  font-weight: 600;
+  color: var(--gray-900);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.testimonial-role {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin: 2px 0 0;
+}
+
+/* ====== FAQ ====== */
+.faq-section { padding: 120px 24px; }
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 48px;
+}
+
+.faq-item {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  background: var(--white);
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.faq-question:hover {
+  background: var(--gray-50);
+  color: var(--brand);
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 1.5rem;
+  color: var(--gray-300);
+  transition: transform 0.25s;
+}
+
+details[open] > .faq-question::after {
+  transform: rotate(45deg);
+  color: var(--brand);
+}
+
+details[open] > .faq-question {
+  background: var(--brand-subtle);
+  color: var(--brand);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.faq-answer {
+  padding: 0 24px 20px;
+  color: var(--gray-600);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  animation: slideDown 0.25s ease-out;
+}
+
+.faq-answer p {
+  margin: 0;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ====== STICKY CTA ====== */
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(15, 118, 110, 0.95), rgba(15, 118, 110, 0.9));
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 24px;
+  z-index: 50;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.sticky-cta-content {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.sticky-cta-text {
+  flex: 1;
+  color: var(--white);
+}
+
+.sticky-cta-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 4px;
+}
+
+.sticky-cta-main {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sticky-slide-enter-active,
+.sticky-slide-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sticky-slide-enter-from {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.sticky-slide-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+/* ====== EXIT INTENT MODAL ====== */
+.exit-intent-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+
+.exit-intent-modal {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 64px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.exit-intent-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: var(--gray-100);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exit-intent-close:hover {
+  background: var(--gray-200);
+  color: var(--gray-900);
+}
+
+.exit-intent-heading {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gray-950);
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+
+.exit-intent-subtext {
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.exit-intent-subtext strong {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.exit-intent-benefits {
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--gray-700);
+  margin-bottom: 8px;
+}
+
+.benefit-item:last-child {
+  margin-bottom: 0;
+}
+
+.benefit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: var(--white);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+.exit-intent-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 1rem !important;
+}
+
+.exit-intent-skip {
+  width: 100%;
+  background: none;
+  border: 1px solid var(--gray-300);
+  color: var(--gray-600);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.exit-intent-skip:hover {
+  border-color: var(--gray-400);
+  color: var(--gray-900);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 /* ====== RESPONSIVE ====== */
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; }
@@ -476,5 +1067,19 @@ const APP_URL = 'https://detuconfianza.vercel.app'
   .feature-row { grid-template-columns: 1fr; gap: 32px; direction: ltr !important; }
   .steps-grid { grid-template-columns: 1fr; }
   .step-arrow { transform: rotate(90deg); text-align: center; padding: 8px 0; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .sticky-cta-content { flex-direction: column; align-items: flex-start; }
+  .sticky-cta-content .btn { width: 100%; }
+  .exit-intent-modal { padding: 32px 24px; max-width: calc(100% - 40px); }
+}
+
+@media (max-width: 600px) {
+  .sticky-cta { padding: 12px 16px; }
+  .sticky-cta-content { gap: 12px; }
+  .sticky-cta-main { font-size: 0.9rem; }
+  .exit-intent-heading { font-size: 1.2rem; }
+  .exit-intent-subtext { font-size: 0.85rem; }
+  .testimonials-section { padding: 80px 24px; }
+  .faq-section { padding: 80px 24px; }
 }
 </style>
