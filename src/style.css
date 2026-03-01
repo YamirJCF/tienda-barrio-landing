@@ -1,0 +1,299 @@
+@import "tailwindcss";
+
+/* ============================================
+   TIENDA BARRIO PRO - Landing Page
+   Premium Design System — No Icons, Typography-First
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Brand Palette */
+  --brand: #0F766E;
+  --brand-light: #14B8A6;
+  --brand-subtle: #F0FDFA;
+  --brand-glow: rgba(20, 184, 166, 0.12);
+
+  /* Neutrals */
+  --gray-950: #0C0E12;
+  --gray-900: #111318;
+  --gray-800: #1C1F26;
+  --gray-700: #2E3039;
+  --gray-600: #4B4F5C;
+  --gray-500: #6B7280;
+  --gray-400: #9CA3AF;
+  --gray-300: #D1D5DB;
+  --gray-200: #E5E7EB;
+  --gray-100: #F3F4F6;
+  --gray-50: #F9FAFB;
+  --white: #FFFFFF;
+
+  /* Accents */
+  --amber: #F59E0B;
+  --red-soft: #FEF2F2;
+  --red-border: #FECACA;
+  --red-text: #991B1B;
+  --green-soft: #F0FDF4;
+  --green-border: #BBF7D0;
+  --green-text: #166534;
+
+  /* Typography */
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --section-y: 120px;
+  --section-x: 24px;
+
+  /* Shapes */
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--gray-900);
+  background: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   TYPOGRAPHY SYSTEM
+   ============================================ */
+.t-display {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--gray-950);
+}
+
+.t-heading {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--gray-950);
+}
+
+.t-subheading {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--gray-500);
+}
+
+.t-body {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--gray-600);
+}
+
+.t-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand);
+}
+
+.t-small {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--gray-500);
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--section-x);
+}
+
+.section {
+  padding: var(--section-y) var(--section-x);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary {
+  padding: 14px 32px;
+  background: var(--gray-950);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--gray-800);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline {
+  padding: 13px 30px;
+  background: transparent;
+  color: var(--gray-900);
+  border: 1.5px solid var(--gray-300);
+}
+
+.btn-outline:hover {
+  border-color: var(--gray-900);
+  background: var(--gray-50);
+}
+
+.btn-brand {
+  padding: 14px 32px;
+  background: var(--brand);
+  color: var(--white);
+}
+
+.btn-brand:hover {
+  background: var(--brand-light);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(15, 118, 110, 0.2);
+}
+
+/* ============================================
+   APP SCREENSHOT FRAME
+   ============================================ */
+.app-frame {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.04),
+    0 16px 40px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-frame:hover {
+  transform: translateY(-4px);
+}
+
+.app-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ============================================
+   CALLOUT BLOCKS
+   ============================================ */
+.callout {
+  padding: 24px 28px;
+  border-radius: var(--radius);
+  border-left: 3px solid;
+}
+
+.callout-warning {
+  background: var(--red-soft);
+  border-color: #EF4444;
+  color: var(--red-text);
+}
+
+.callout-success {
+  background: var(--green-soft);
+  border-color: var(--brand);
+  color: var(--green-text);
+}
+
+.callout p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ============================================
+   DIVIDER
+   ============================================ */
+.divider {
+  width: 48px;
+  height: 3px;
+  background: var(--brand);
+  border-radius: 2px;
+  margin: 16px 0 24px;
+}
+
+.divider-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.anim-d1 {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.anim-d2 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.anim-d3 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  :root {
+    --section-y: 72px;
+    --section-x: 20px;
+  }
+
+  .btn-primary,
+  .btn-brand {
+    width: 100%;
+    justify-content: center;
+  }
+}
