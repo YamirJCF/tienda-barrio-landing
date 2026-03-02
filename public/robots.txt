@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://detuconfianza.vercel.app/sitemap.xml
+
+# Disallow internal app routes (SPA)
+Disallow: /#/

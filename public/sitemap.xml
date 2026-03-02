@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- HOME -->
+  <url>
+    <loc>https://detuconfianza.vercel.app/</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://detuconfianza.vercel.app/images/app-dashboard.png</image:loc>
+      <image:caption>Panel de control principal de Tienda Barrio Pro mostrando ventas del día, estado de caja e inventario en tiempo real</image:caption>
+      <image:title>Dashboard Tienda Barrio Pro</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://detuconfianza.vercel.app/images/app-reports.png</image:loc>
+      <image:caption>Reportes financieros de Tienda Barrio Pro: ganancia neta, margen real y ticket promedio</image:caption>
+      <image:title>Reportes Financieros Tienda Barrio Pro</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://detuconfianza.vercel.app/images/app-inventory.png</image:loc>
+      <image:caption>Control de inventario de tienda de barrio: lista de productos con stock, precios y alertas</image:caption>
+      <image:title>Inventario Tienda Barrio Pro</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://detuconfianza.vercel.app/images/app-employees.png</image:loc>
+      <image:caption>Gestión de empleados en Tienda Barrio Pro: control de acceso por turno y registro de fiados</image:caption>
+      <image:title>Gestión de Empleados Tienda Barrio Pro</image:title>
+    </image:image>
+  </url>
+
+  <!-- FINANZAS -->
+  <url>
+    <loc>https://detuconfianza.vercel.app/finanzas</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://detuconfianza.vercel.app/images/app-reports.png</image:loc>
+      <image:caption>Pantalla de reportes financieros en Tienda Barrio Pro: ventas totales, ganancia neta, margen y costo de mercancía</image:caption>
+      <image:title>Reportes Financieros para Tiendas de Barrio</image:title>
+    </image:image>
+  </url>
+
+  <!-- INVENTARIO -->
+  <url>
+    <loc>https://detuconfianza.vercel.app/inventario</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://detuconfianza.vercel.app/images/app-inventory.png</image:loc>
+      <image:caption>Control de inventario en Tienda Barrio Pro: lista de productos con stock actual, precio de venta y alertas de quiebre</image:caption>
+      <image:title>Control de Inventario para Tiendas de Barrio</image:title>
+    </image:image>
+  </url>
+
+  <!-- OPERACIÓN -->
+  <url>
+    <loc>https://detuconfianza.vercel.app/operacion</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://detuconfianza.vercel.app/images/app-employees.png</image:loc>
+      <image:caption>Administración de empleados en Tienda Barrio Pro: control de acceso por turno, permisos y registro de actividad</image:caption>
+      <image:title>Gestión de Empleados y Fiados para Tiendas de Barrio</image:title>
+    </image:image>
+  </url>
+
+</urlset>

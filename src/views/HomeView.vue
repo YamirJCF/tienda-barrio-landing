@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ref, onMounted, computed } from 'vue'
+import AnimatedHero from '../components/AnimatedHero.vue'
+import AnimatedFinanzas from '../components/AnimatedFinanzas.vue'
+import AnimatedInventario from '../components/AnimatedInventario.vue'
+import AnimatedOperacion from '../components/AnimatedOperacion.vue'
 
 const APP_URL = 'https://detuconfianza.vercel.app'
 
@@ -91,29 +95,51 @@ const urgencyText = computed(() => {
             </div>
           </div>
 
-          <!-- SCREENSHOT PRINCIPAL — Grande y anotado -->
+          <!-- SCREENSHOT PRINCIPAL ANIMADO -->
           <div class="hero-screenshot">
-            <div class="screenshot-container">
-              <div class="app-frame">
-                <img src="/images/app-dashboard.png" alt="Panel de control de Tienda Barrio Pro" />
-              </div>
-              <!-- Anotaciones flotantes -->
-              <div class="annotation annotation-top">
-                <span class="annotation-dot"></span>
-                <span>Abre y cierra tu caja cada turno</span>
-              </div>
-              <div class="annotation annotation-right">
-                <span class="annotation-dot"></span>
-                <span>Tus métricas del día en tiempo real</span>
-              </div>
-              <div class="annotation annotation-bottom">
-                <span class="annotation-dot"></span>
-                <span>Estado del inventario siempre visible</span>
-              </div>
-            </div>
+            <AnimatedHero />
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PROGRAMA FUNDADORES — Posición #2, máxima urgencia -->
+    <!-- ============================================ -->
+    <section class="section founder-section">
+      <div class="container founder-inner">
+        <div class="founder-content">
+          <p class="t-label" style="color: var(--amber);">Cupos limitados · Lanzamiento</p>
+          <h2 class="t-heading" style="margin-top: 8px;">
+            Sé uno de los primeros 100 Tenderos Fundadores.
+          </h2>
+          <div class="divider" style="background: var(--amber);"></div>
+          <p class="t-body">
+            Estamos en etapa de lanzamiento. Los primeros 100 tenderos que se registren reciben acceso completo, soporte directo del equipo y garantizan su precio cuando lancemos planes premium.
+          </p>
+          <ul class="founder-perks">
+            <li>Acceso completo desde el día uno, sin restricciones</li>
+            <li>Soporte directo con el equipo — te ayudamos a configurar tu tienda</li>
+            <li>Tu retroalimentación define las próximas funcionalidades</li>
+            <li>Precio de fundador bloqueado para siempre</li>
+          </ul>
+          <a :href="`${APP_URL}/#/register-store`" class="btn btn-brand" style="margin-top: 24px;">
+            Registrarme gratis
+          </a>
+          <p class="cta-microcopy" style="margin-top: 10px; color: var(--gray-500);">Sin tarjeta · Sin contratos · Cancela cuando quieras</p>
+        </div>
+        <div class="founder-visual">
+          <div class="spots-card">
+            <p class="spots-label">Cupos disponibles</p>
+            <p class="spots-num">100</p>
+            <p class="spots-sub">primeros registros</p>
+            <div class="spots-bar">
+              <div class="spots-fill" style="width: 18%"></div>
+            </div>
+            <p class="spots-fine">Registro abierto · Gratis</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -234,8 +260,8 @@ const urgencyText = computed(() => {
             <RouterLink to="/finanzas" class="feature-link">Ver detalles de Finanzas →</RouterLink>
           </div>
           <div class="feature-row-image">
-            <div class="app-frame app-frame-lg">
-              <img src="/images/app-reports.png" alt="Reportes financieros" />
+            <div class="anim-wrapper" style="width: 100%; max-width: 440px;">
+              <AnimatedFinanzas />
             </div>
           </div>
         </div>
@@ -250,8 +276,8 @@ const urgencyText = computed(() => {
             <RouterLink to="/inventario" class="feature-link">Ver detalles de Inventario →</RouterLink>
           </div>
           <div class="feature-row-image">
-            <div class="app-frame app-frame-lg">
-              <img src="/images/app-inventory.png" alt="Control de inventario" />
+            <div class="anim-wrapper" style="width: 100%; max-width: 380px;">
+              <AnimatedInventario />
             </div>
           </div>
         </div>
@@ -266,8 +292,8 @@ const urgencyText = computed(() => {
             <RouterLink to="/operacion" class="feature-link">Ver detalles de Operación →</RouterLink>
           </div>
           <div class="feature-row-image">
-            <div class="app-frame app-frame-lg">
-              <img src="/images/app-employees.png" alt="Gestión de empleados" />
+            <div class="anim-wrapper" style="width: 100%; max-width: 380px;">
+              <AnimatedOperacion />
             </div>
           </div>
         </div>
@@ -444,7 +470,7 @@ const urgencyText = computed(() => {
         </p>
         <div class="final-cta-block">
           <a :href="`${APP_URL}/#/register-store`" class="btn btn-brand btn-lg">
-            Crear mi cuenta gratis ahora
+            Registrarme gratis
           </a>
           <p class="cta-microcopy" style="color: var(--gray-500);">
             Sin tarjeta de crédito · Sin contratos · Cancela cuando quieras

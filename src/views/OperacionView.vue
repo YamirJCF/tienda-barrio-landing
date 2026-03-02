@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import AnimatedOperacion from '../components/AnimatedOperacion.vue'
 
 const APP_URL = 'https://detuconfianza.vercel.app'
 </script>
@@ -35,8 +36,8 @@ const APP_URL = 'https://detuconfianza.vercel.app'
           </div>
         </div>
         <div class="detail-image">
-          <div class="app-frame">
-            <img src="/images/app-employees.png" alt="Gestión de empleados en Tienda Barrio Pro" />
+          <div class="anim-wrapper" style="width: 100%; max-width: 380px;">
+            <AnimatedOperacion />
           </div>
         </div>
       </div>

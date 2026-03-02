@@ -25,7 +25,7 @@ const closeMenu = () => { mobileMenuOpen.value = false }
 
         <div class="nav-actions">
           <a :href="`${APP_URL}/#/login`" class="nav-login">Iniciar sesión</a>
-          <a :href="`${APP_URL}/#/register-store`" class="btn btn-primary nav-cta">Crear cuenta</a>
+          <a :href="`${APP_URL}/#/register-store`" class="btn btn-primary nav-cta">Registrarme gratis</a>
         </div>
 
         <button class="nav-toggle" @click="toggleMenu" :aria-label="mobileMenuOpen ? 'Cerrar' : 'Menú'">
@@ -41,7 +41,7 @@ const closeMenu = () => { mobileMenuOpen.value = false }
           <RouterLink to="/operacion" class="nav-mobile-link" @click="closeMenu">Operación</RouterLink>
           <hr class="nav-mobile-divider" />
           <a :href="`${APP_URL}/#/login`" class="nav-mobile-link" @click="closeMenu">Iniciar sesión</a>
-          <a :href="`${APP_URL}/#/register-store`" class="btn btn-primary" style="width: 100%; justify-content: center;" @click="closeMenu">Crear cuenta</a>
+          <a :href="`${APP_URL}/#/register-store`" class="btn btn-primary" style="width: 100%; justify-content: center;" @click="closeMenu">Registrarme gratis</a>
         </div>
       </Transition>
     </nav>

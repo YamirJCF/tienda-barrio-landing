@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import AnimatedFinanzas from '../components/AnimatedFinanzas.vue'
 
 const APP_URL = 'https://detuconfianza.vercel.app'
 </script>
@@ -35,8 +36,8 @@ const APP_URL = 'https://detuconfianza.vercel.app'
           </div>
         </div>
         <div class="detail-image">
-          <div class="app-frame">
-            <img src="/images/app-reports.png" alt="Reportes financieros en Tienda Barrio Pro" />
+          <div class="anim-wrapper" style="width: 100%; max-width: 440px;">
+            <AnimatedFinanzas />
           </div>
         </div>
       </div>

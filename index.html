@@ -2,16 +2,85 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Tienda Barrio Pro: El sistema de gestión digital para tiendas de barrio. Controla tus finanzas, inventario y empleados desde tu celular. Únete a los Tenderos Fundadores." />
-    <meta name="keywords" content="tienda barrio, sistema POS, gestión inventario, finanzas, control de ventas" />
-    <meta property="og:title" content="Tienda Barrio Pro - Sistema de Gestión para Tiendas de Barrio" />
-    <meta property="og:description" content="Descubre cuánto ganas realmente. Control total de tu tienda en tu celular, sin papel ni Excel." />
+    <!-- ===== SEO PRIMARY ===== -->
+    <title>Tienda Barrio Pro | Sistema de gestión para tiendas de barrio</title>
+    <meta name="description" content="Registra tus ventas, controla tu inventario y conoce tu ganancia real desde el celular. Sin papel, sin Excel. Gratis para los primeros 100 tenderos fundadores." />
+    <meta name="keywords" content="sistema para tiendas de barrio, gestión de tienda, inventario tienda, control de ventas, app para tenderos, finanzas tienda barrio, Colombia" />
+    <meta name="author" content="Tienda Barrio Pro" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://detuconfianza.vercel.app" />
+
+    <!-- ===== OPEN GRAPH (Facebook / WhatsApp) ===== -->
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/images/app-dashboard.png" />
-    <meta name="theme-color" content="#0F766E" />
-    <title>Tienda Barrio Pro - Sistema Digital para Tiendas de Barrio</title>
+    <meta property="og:url" content="https://detuconfianza.vercel.app" />
+    <meta property="og:title" content="Tienda Barrio Pro | ¿Cuánto ganaste hoy realmente?" />
+    <meta property="og:description" content="El sistema que potencia tu tienda sin cambiar tu forma de trabajar. Registra ventas, controla inventario y conoce tu ganancia real desde el celular." />
+    <meta property="og:image" content="https://detuconfianza.vercel.app/images/og-cover.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tienda Barrio Pro - Panel de control de ventas e inventario" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:site_name" content="Tienda Barrio Pro" />
+
+    <!-- ===== TWITTER CARD ===== -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tienda Barrio Pro | ¿Cuánto ganaste hoy realmente?" />
+    <meta name="twitter:description" content="El sistema que potencia tu tienda sin cambiar tu forma de trabajar. Gratis para los primeros 100 Tenderos Fundadores." />
+    <meta name="twitter:image" content="https://detuconfianza.vercel.app/images/og-cover.png" />
+
+    <!-- ===== FAVICON ===== -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/vite.svg" />
+
+    <!-- ===== PRECONNECT / PERFORMANCE ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- ===== PRELOAD HERO IMAGE (LCP) ===== -->
+    <link rel="preload" as="image" href="/images/app-dashboard.png" fetchpriority="high" />
+
+    <!-- ===== STRUCTURED DATA (Schema.org) ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Tienda Barrio Pro",
+      "description": "Sistema de gestión digital para tiendas de barrio y minimarkets. Registra ventas, controla inventario y conoce tu ganancia real desde el celular.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Android, Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "COP",
+        "description": "Acceso gratuito para los primeros 100 Tenderos Fundadores"
+      },
+      "url": "https://detuconfianza.vercel.app",
+      "inLanguage": "es-CO",
+      "screenshot": [
+        {
+          "@type": "ImageObject",
+          "url": "https://detuconfianza.vercel.app/images/app-dashboard.png",
+          "caption": "Panel de control principal de Tienda Barrio Pro"
+        },
+        {
+          "@type": "ImageObject",
+          "url": "https://detuconfianza.vercel.app/images/app-reports.png",
+          "caption": "Reportes financieros y ganancia neta"
+        },
+        {
+          "@type": "ImageObject",
+          "url": "https://detuconfianza.vercel.app/images/app-inventory.png",
+          "caption": "Control de inventario con alertas de stock"
+        },
+        {
+          "@type": "ImageObject",
+          "url": "https://detuconfianza.vercel.app/images/app-employees.png",
+          "caption": "Gestión de empleados y control de acceso"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="app"></div>

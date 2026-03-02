@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import AnimatedInventario from '../components/AnimatedInventario.vue'
 
 const APP_URL = 'https://detuconfianza.vercel.app'
 </script>
@@ -35,8 +36,8 @@ const APP_URL = 'https://detuconfianza.vercel.app'
           </div>
         </div>
         <div class="detail-image">
-          <div class="app-frame">
-            <img src="/images/app-inventory.png" alt="Gestión de inventario en Tienda Barrio Pro" />
+          <div class="anim-wrapper" style="width: 100%; max-width: 380px;">
+            <AnimatedInventario />
           </div>
         </div>
       </div>
